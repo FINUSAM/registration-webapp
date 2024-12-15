@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %} Payment {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Payment for Student: {{ student.name }}</h1>
+    <p>Chest Number: {{ student.chestnumber }}</p>
+    <p>Current Payment Status: {{ student.payment_status|title }}</p>
+
+    <h2>Payment Information</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="payment_status">Payment Status</label>
+            <select name="payment_status" id="payment_status" required>
+                <option value="success">Payment Successful</option>
+                <option value="failure">Payment Failed</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit Payment</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

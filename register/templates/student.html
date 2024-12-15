@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} Student Details {% endblock %}
+
+{% block content %}
+
+<h1>Student Details</h1>
+
+<h3>Name: {{ student.studentname }}</h3>
+<p>Category: {{ student.get_category_display }}</p>
+<p>Parent Name: {{ student.parentname }}</p>
+<p>Phone Number: {{ student.phonenumber }}</p>
+<p>Chest Number: {{ student.chestnumber }}</p>
+<p>
+    {{ student.paid|yesno:"Paid, Not Paid" }}
+    {% if not student.paid %}
+    <a href="{% url 'redirect_to_payment' chestnumber=student.chestnumber %}">Pay Now</a>
+    {% endif %}
+</p>
+
+{% include 'messages.html' %}
+
+
+<a href="{% url 'register' %}">Register another student</a>
+<a href="{% url 'students' %}">Show All Students</a>
+
+{% endblock %}

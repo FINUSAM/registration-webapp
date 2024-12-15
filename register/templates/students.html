@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %} Student List {% endblock %}
+
+{% block style %}
+<style>
+    th, td {
+        text-align: center;
+        padding: 2px 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<h2>Student List</h2>
+
+<!-- For Paid Students: Display by category -->
+{% for category, students_in_category in categorized_students.items %}
+    <h3>Category: {{ category }}</h3>
+    <table>
+        <tr>
+            <th>Chest No</th>
+            <th>Student Name</th>
+            <th>Parent Name</th>
+            <th>View</th>
+        </tr>
+        {% for student in students_in_category %}
+        <tr>
+            <td>{{ student.chestnumber }}</td>
+            <td>{{ student.studentname }}</td>
+            <td>{{ student.parentname }}</td>
+            <td><a href="{% url 'student' chestnumber=student.chestnumber %}">View</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endfor %}
+
+<!-- For Not Paid Students: Display in a separate table -->
+{% if unpaid_students %}
+    <h3>Not Paid Students</h3>
+    <table class="not-paid-table" style="border: 2px solid red;">
+        <tr>
+            <th>Chest No</th>
+            <th>Student Name</th>
+            <th>Parent Name</th>
+            <th>Pay</th>
+        </tr>
+        {% for student in unpaid_students %}
+        <tr>
+            <td>{{ student.chestnumber }}</td>
+            <td>{{ student.studentname }}</td>
+            <td>{{ student.parentname }}</td>
+            <td>
+                {{ student.paid|yesno:"Paid," }}
+                <a href="{% url 'redirect_to_payment' chestnumber=student.chestnumber %}">Pay</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+<a href="{% url 'register' %}">Register another student</a>
+
+{% endblock %}

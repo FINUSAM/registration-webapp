@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} Student Registration {% endblock %}
+
+{% block content %}
+
+<h2>Student Registration</h2>
+
+<!-- Form starts here -->
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}  <!-- This will automatically render the form with the default widget styling -->
+    <button type="submit">Register</button>
+</form>
+
+{% endblock %}
